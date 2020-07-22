@@ -1,0 +1,202 @@
+===========================================
+= Exercise 1: Custom Created Linked Queue =
+===========================================
+package LinkedQueueADT;
+
+import LinkedList.LinkedList;
+import LinkedList.Exceptions;
+
+public class LinkedQueue<E> {
+
+    private LinkedList l1;
+
+    public LinkedQueue(){
+        l1 = new LinkedList();
+    }
+
+    public void push(E data){
+        l1.Postpend(data);
+    }
+
+    public E pop() throws Exceptions {
+        E result;
+        if ((l1.getCount() == 0)) {
+            System.out.println("Queue is empty.");
+            result = null;
+        } else {
+            System.out.println("Removing First element: " + l1.getFirstNode() + "\tValue: " + l1.getFirstNode().getData());
+                result = (E) l1.getFirstNode();
+                l1.RemoveFromFront();
+            }
+            return result;
+        }
+
+    public E peek(){
+        E result;
+        System.out.println("Peek First element: " + l1.getFirstNode() + "\tValue: " + l1.getFirstNode().getData());
+        result = (E) l1.getFirstNode();
+        return result;
+    }
+
+    public void empty(){
+        l1.setFirstNode(null);
+    }
+
+    public void displayQueue(){
+        l1.Display();
+    }
+
+    // Exercise 1
+    public void concatenate(LinkedQueue<E> Q2){
+        l1.getLastNode().setNext(Q2.l1.getFirstNode());
+        l1.setLastNode(Q2.l1.getLastNode());
+        Q2.empty();
+    }
+}
+
+================================================
+= Exercise 1: Custom Created Linked Queue Test =
+================================================
+package LinkedQueueADT;
+
+import LinkedList.Exceptions;
+
+public class LinkedQueueTest {
+    private static LinkedQueue lq1 =  new LinkedQueue();
+    private static LinkedQueue lq2 = new LinkedQueue();
+
+    public static void main(String[] args) throws Exceptions {
+        System.out.println("Q1");
+        lq1.push(10);
+        lq1.displayQueue();
+        lq1.push(20);
+        lq1.displayQueue();
+        lq1.push(30);
+        lq1.displayQueue();
+        lq1.push(40);
+        lq1.displayQueue();
+        lq1.push(50);
+        lq1.displayQueue();
+
+        System.out.println("Q2");
+        lq2.push("George");
+        lq2.displayQueue();
+        lq2.push("Michael");
+        lq2.displayQueue();
+        lq2.push("Jonathan");
+        lq2.displayQueue();
+        lq2.push("Maria");
+        lq2.displayQueue();
+        lq2.push("Lucy");
+        lq2.displayQueue();
+
+        // Exercise 1 Test
+        System.out.println("Concatenating Q1 with Q2");
+        lq1.concatenate(lq2);
+        System.out.print("Q1 is: ");
+        lq1.displayQueue();
+        System.out.print("Q2 is: ");
+        lq2.displayQueue();
+        System.out.println();
+
+        lq1.pop();
+        lq1.displayQueue();
+
+        lq1.peek();
+        lq1.displayQueue();
+    }
+}
+
+================================================
+= Exercise 1: Output                           =
+================================================
+Q1
+10
+
+10 20
+
+10 20 30
+
+10 20 30 40
+
+10 20 30 40 50
+
+Q2
+George
+
+George Michael
+
+George Michael Jonathan
+
+George Michael Jonathan Maria
+
+George Michael Jonathan Maria Lucy
+
+Concatenating Q1 with Q2
+Q1 is: 10 20 30 40 50 George Michael Jonathan Maria Lucy
+
+Q2 is: Unnamed List is Empty
+
+Removing First element: LinkedList.Node@1324409e	Value: 10
+20 30 40 50 George Michael Jonathan Maria Lucy
+
+Peek First element: LinkedList.Node@2c6a3f77	Value: 20
+20 30 40 50 George Michael Jonathan Maria Lucy
+
+
+Process finished with exit code 0
+
+================================================================
+= Exercise 2: Stack Transfer using Java built-in Stack Library =
+================================================================
+package Exercise2Stack;
+
+import java.util.Stack;
+
+public class Exercise2Stack {
+    // Initialize Stack Memory
+    private static Stack s1 = new Stack();
+    private static Stack s2 = new Stack();
+
+    public static void main(String[] args) {
+        // Populating Stack 1
+        System.out.println("Stack 1");
+        s1.push(10);
+        s1.push(20);
+        s1.push(30);
+        s1.push(40);
+        s1.push(50);
+        System.out.println(s1.toString());
+
+        // Populating Stack 2
+        System.out.println("Stack 2");
+        s2.push("George");
+        s2.push("Michael");
+        s2.push("Reza");
+        s2.push("Corsair K68");
+        s2.push("Corsair Vengeance");
+        System.out.println(s2.toString());
+
+        // Testing Exercise 2
+        System.out.println("Transferring Stack 2 onto Stack 1");
+        transfer(s1,s2);
+        System.out.println(s1.toString());
+    }
+
+    public static void transfer(Stack S, Stack T){
+        // Push the top of T to S while emptying T
+        while (!T.isEmpty()){ S.push(T.pop());}
+    }
+}
+
+==========================================================
+= Exercise 2: Output                                     =
+==========================================================
+Stack 1
+[10, 20, 30, 40, 50]
+Stack 2
+[George, Michael, Reza, Corsair K68, Corsair Vengeance]
+Transferring Stack 2 onto Stack 1
+[10, 20, 30, 40, 50, Corsair Vengeance, Corsair K68, Reza, Michael, George]
+
+Process finished with exit code 0
